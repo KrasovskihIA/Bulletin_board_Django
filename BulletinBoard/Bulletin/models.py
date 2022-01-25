@@ -47,7 +47,7 @@ class Post(models.Model):
     category = models.ForeignKey(Category, verbose_name='Категория', blank=False, on_delete=models.SET_NULL, null=True)
     likes = models.ManyToManyField(User, blank=True, related_name='users_likes_it')
     contact = models.CharField(max_length=15)
-    url = models.SlugField(max_length=150, unique=True)
+    
 
     def __str__(self):
         return f'{self.title}'
