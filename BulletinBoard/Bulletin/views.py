@@ -8,4 +8,4 @@ from .models import *
 class IndexViews(View):
     def get(self, request):
         posts = Post.objects.all()
-        return render(request,'posts/post_list.html', {'post_list':posts})
+        return render(request,'posts/index.html', {'post_list':posts})
