@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.base import View
 from django.http import HttpResponse
 from .models import *
+from .forms import PostForm
 
 
 class IndexViews(View):
@@ -21,8 +22,27 @@ def post_detail(request, post_id):
 def post_edit(request, post_id):
     return HttpResponse(f'Редактирование обьявления номер {post_id}')
 
+
 def post_create(request):
-    return HttpResponse(f'Создание нового обьявления')
+    template_name = 'BulletinBoard/post_create.html'
+    context = {'form': PostForm()}
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            context['post_was_created'] = True      
+        else:
+            context['post_with_errors'] = True
+            context['form'] = form
+    return render(request, template_name, context)
+
+        
+
+
+
 
 def post_delete(request, post_id):
     return HttpResponse(f'Удаление обьявления номер {post_id}')
