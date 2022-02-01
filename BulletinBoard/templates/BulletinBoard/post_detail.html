@@ -18,5 +18,11 @@
         {% csrf_token %}
         <button type="submit">Like</button>
     </form>
+    {% if post.author == user %}
+        <a href="{% url 'post_edit' post.id %}">Редактировать пост</a>
+        {% endif %}
+    {% if post.author == user %}
+        <a href="{% url 'post_delete' post.id %}">Удалить объявление</a>
+        {% endif %}
 </body>
 </html>
