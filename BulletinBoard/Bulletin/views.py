@@ -1,3 +1,4 @@
+from urllib import request
 from django.core.exceptions import PermissionDenied
 from ast import Delete
 from audioop import reverse
@@ -6,9 +7,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.generic.base import View
 from django.http import HttpResponse
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
 from .models import *
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
@@ -32,10 +33,37 @@ class PostDeleteView(DeleteView):
         return reverse('post_delete_success', args=(post_id, ))
 
 
-def post_detail(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-    return render(request,'BulletinBoard/post_detail.html', {'post':post})
 
+class PosrDetailView(DetailView):
+    model = Post
+    pk_url_kwarg = 'post_id'
+    template_name = 'BulletinBoard/post_detail.html'
+    comment_form_class = CommentForm
+
+    def get(self, request, post_id, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        context['comments'] = Comment.objects.filter(in_post_id=post_id).order_by('-date_publish')
+        if request.user.is_authenticated:
+            context['comment_form'] = self.comment_form_class
+        return self.render_to_response(context)
+
+    @method_decorator(login_required)
+    def post(self, request, post_id, *args, **kwargs):
+        post = get_object_or_404(Post, id=post_id)
+        form = self.comment_form_class(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.in_post = post
+            comment.save()
+            return redirect(request.META.get('HTTP_REFERER'), request)
+        else:
+            return render(request, self.template_name, context={
+                'comment_form':self.comment_form_class,
+                'post': post,
+                'comments': Comment.objects.filter(in_post_id=post_id).order_by('-date_publish')
+            })
 
 
 class PostEditView(UpdateView):

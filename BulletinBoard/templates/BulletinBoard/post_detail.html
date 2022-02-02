@@ -24,5 +24,21 @@
     {% if post.author == user %}
         <a href="{% url 'post_delete' post.id %}">Удалить объявление</a>
         {% endif %}
+        <div>
+            <ul>
+                {% for comment in comments %}
+                    <li><a href="">
+                        <p><a href="#">{{ comment.author }}</a></p>
+                        <p>{{ comment.date_publish }}</p>
+                        <p>{{ comment.text }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+            <form method="POST">
+                {% csrf_token %}
+                {{ comment_form }}
+                <button type="submit">Отправить комментарий</button>
+            </form>
+        </div>
 </body>
 </html>
