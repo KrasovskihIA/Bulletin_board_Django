@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <article>
+        {% if form.errors %}
+            {% for field, errors in form.errors.items %}
+                <p>{{ errors }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <h3>Войти</h3>
+        <hr>
+        {% if not user.is_authenticated %}
+            <form method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit">Войти</button>
+            </form>
+            
+        {% else %}
+            <h3>Добро пожаловать, {{ user.username }}</h3>
+            <a href="{% url 'logout' %}">Выйти</a>
+            <a href="{% url 'index' %}">Вернуться на главную страницу</a>
+        {% endif %}
+    </article>
+    {% endblock %}
