@@ -1,7 +1,9 @@
 from django.urls import path
 from django.views.generic import TemplateView
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetCompleteView, PasswordResetConfirmView
 from . import views
 from . import views_auth
+from django.urls.base import reverse_lazy
 
 
 
@@ -16,5 +18,23 @@ urlpatterns = [
     path('signup/', views_auth.SignupViews.as_view(), name='signup'),
     path('login/', views_auth.Login.as_view(), name='login'),
     path('logout/', views_auth.logout_views, name='logout'),
+
+    path('password_resset/', PasswordResetView.as_view(
+        success_url=reverse_lazy('password_resset_done'),
+        template_name = 'my_auth/password_reset.html',
+        email_template_name = 'my_auth/password_reset_email.html'),
+        name='password_resset'),
+    path('password_resset/done/', PasswordResetDoneView.as_view(
+        template_name='my_auth/password_reset_done.html'),
+        name='password_resset_done'),
+    path('password_resset/<str:uidb64>/<slug:token>/', PasswordResetConfirmView.as_view(
+        success_url=reverse_lazy('password_reset_complete'),
+        template_name='my_auth/password_reset_confirm.html'),
+        name='password_reset_confirm'),
+
+    path('password_reset/complete/', PasswordResetCompleteView.as_view(
+        template_name='my_auth/password_reset_complete.html'),
+        name='password_reset_complete'),
+
     path('', views.IndexView.as_view(), name='index'),
 ]

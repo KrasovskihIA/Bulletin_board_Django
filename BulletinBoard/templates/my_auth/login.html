@@ -16,7 +16,7 @@
                 {{ form }}
                 <button type="submit">Войти</button>
             </form>
-            
+            <a href="{% url 'password_resset' %}">Сбросить пароль</a>
         {% else %}
             <h3>Добро пожаловать, {{ user.username }}</h3>
             <a href="{% url 'logout' %}">Выйти</a>
