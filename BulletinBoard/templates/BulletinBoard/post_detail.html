@@ -3,6 +3,7 @@
 {% block content %}
     <p>{{ post.title }}</p>
     <p><a href="/{{ post.author.id }}/profile">{{ post.author }}</a></p>
+    <p>{{ post.contact }}</p>
     <p>{{ post.date_pub }}</p>
     <img src="{{ post.image.url }}" alt="">
     <p>{{ post.description }}</p>
@@ -21,7 +22,7 @@
         <div>
             <ul>
                 {% for comment in comments %}
-                    <li><a href="">
+                    <li>
                         <p>{{ comment.author }}</p>
                         <p>{{ comment.date_publish }}</p>
                         <p>{{ comment.text }}</p>
