@@ -15,6 +15,9 @@ urlpatterns = [
     path('post/<int:post_id>/delete_success/', TemplateView.as_view(template_name='BulletinBoard/delete_success.html'), name ='post_delete_success'),
     path('post/<int:post_id>/like/', views.PostLikeView.as_view(), name='like_post'),
 
+    path('<int:user_id>/profile/', views_auth.ProfileView.as_view(), name ='profile'),
+    path('<int:user_id>/profile/update/', views_auth.UpdateProfileView.as_view(), name ='update_profile'),
+
     path('signup/', views_auth.SignupViews.as_view(), name='signup'),
     path('login/', views_auth.Login.as_view(), name='login'),
     path('logout/', views_auth.logout_views, name='logout'),

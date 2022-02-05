@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div>
+        <h1>{{ profile.user.username }}</h1>
+        <h2>Дата рождения:</h2>
+        {% if profile.birth_date %}
+            <i>{{ profile.birth_date|date:'d F Y' }}</i>
+        {% endif %}
+
+        <h2>Обо мне:</h2>
+        {% if profile.about %}
+            <i>{{ profile.about }}</i>
+        {% endif %}
+
+        <h2>Фото профиля</h2>
+        {% if profile.avatar %}
+            <img src='{{ profile.avatar.url }}'>
+        {% endif %}
+
+        {% if user.id == profile.id %}
+            <a href="{% url 'update_profile' profile.user.id %}"></a>
+        {% endif %}
+        
+    </div>
+{% endblock %}

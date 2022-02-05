@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit">Принять изменения</button>
+        </form>
+        <a href="{% url 'password_resset' %}"> Сбросить пароль</a>
+    </div>
+{% endblock %}

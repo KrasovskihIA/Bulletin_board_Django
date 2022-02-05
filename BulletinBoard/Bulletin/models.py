@@ -29,9 +29,6 @@ class Category(models.Model):
     def __str__(self):
         return f'{self.name}'
 
-    class Meta:
-        verbose_name = 'Категория'
-        verbose_name_plural = 'Категории'
 
 
 # Класс обьявлений
@@ -50,10 +47,6 @@ class Post(models.Model):
     def __str__(self):
         return f'{self.title}'
 
-    class Meta:
-        verbose_name = 'Объявление'
-        verbose_name_plural = 'Объявления'
-
 
 
 # Класс комментариев
@@ -63,7 +56,4 @@ class Comment(models.Model):
     in_post = models.ForeignKey(Post, on_delete=CASCADE)
     date_publish = models.DateTimeField(default=timezone.now)
 
-    class Meta:
-        verbose_name = 'Комментарий'
-        verbose_name_plural = 'Комментарий'
 
