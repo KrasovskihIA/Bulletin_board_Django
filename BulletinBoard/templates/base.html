@@ -19,14 +19,21 @@
 				<a href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" class="logo" alt="" titl=""/></a>
 				<a href="#" class="hamburger"></a>
 				<nav>
+					{% if request.user.id == None %}
 					<ul>
-						<li><a href="#">Buy</a></li>
-						<li><a href="#">Rent</a></li>
-						<li><a href="#">Sell</a></li>
-						<li><a href="#">About</a></li>
-						<li><a href="#">Contact</a></li>
+						<li><a href="{% url 'login' %}">Войти на аккаунт</a></li>
+						<li><a href="{% url 'signup' %}">Зарегистрировать аккаунт</a></li>
 					</ul>
-					<a href="#" class="login_btn">Login</a>
+					<a href="{% url 'index' %}" class="login_btn">Главная страница</a>
+					{% else %}
+					<ul>
+						<li><a href="{% url 'post_create' %}">Создать объявление</a></li>
+						<li><a href="{% url 'update_profile' user.id %}">Обновить профиль</a></li>
+						<li><a href="{% url 'profile' user.id %}">{{ request.user }}</a></li>
+						<li><a href="{% url 'logout' %}">Выйти</a></li>
+					</ul>
+					<a href="{% url 'index' %}" class="login_btn">Главная страница</a>
+					{% endif %}
 				</nav>
 			</div>
 		</header><!--  end header section  -->

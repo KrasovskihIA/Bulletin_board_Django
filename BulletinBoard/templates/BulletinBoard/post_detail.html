@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Обьявление номер {{ post.id }}</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block content %}
     <p>{{ post.title }}</p>
-    <p><a href="">{{ post.author }}</a></p>
+    <p><a href="/{{ post.author.id }}/profile">{{ post.author }}</a></p>
     <p>{{ post.date_pub }}</p>
     <img src="{{ post.image.url }}" alt="">
     <p>{{ post.description }}</p>
@@ -28,7 +22,7 @@
             <ul>
                 {% for comment in comments %}
                     <li><a href="">
-                        <p><a href="">{{ comment.author }}</a></p>
+                        <p>{{ comment.author }}</p>
                         <p>{{ comment.date_publish }}</p>
                         <p>{{ comment.text }}</p>
                     </li>
@@ -40,5 +34,4 @@
                 <button type="submit">Отправить комментарий</button>
             </form>
         </div>
-</body>
-</html>
+{% endblock %}

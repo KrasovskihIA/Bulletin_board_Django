@@ -20,7 +20,7 @@
         {% endif %}
 
         {% if user.id == profile.id %}
-            <a href="{% url 'update_profile' profile.user.id %}"></a>
+            <a href="{% url 'update_profile' profile.user.id %}">Редактирование профиля</a>
         {% endif %}
         
     </div>
