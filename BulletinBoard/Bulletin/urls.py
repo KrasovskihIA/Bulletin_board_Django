@@ -4,6 +4,7 @@ from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, 
 from . import views
 from . import views_auth
 from django.urls.base import reverse_lazy
+from .views import CategorySearch
 
 
 
@@ -14,6 +15,7 @@ urlpatterns = [
     path('post/<int:post_id>/delete/', views.PostDeleteView.as_view(), name='post_delete'),
     path('post/<int:post_id>/delete_success/', TemplateView.as_view(template_name='BulletinBoard/delete_success.html'), name ='post_delete_success'),
     path('post/<int:post_id>/like/', views.PostLikeView.as_view(), name='like_post'),
+    path('search/', CategorySearch.as_view(), name='search_results'),
 
     path('<int:user_id>/profile/', views_auth.ProfileView.as_view(), name ='profile'),
     path('<int:user_id>/profile/update/', views_auth.UpdateProfileView.as_view(), name ='update_profile'),

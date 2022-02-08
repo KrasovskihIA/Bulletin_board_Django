@@ -12,6 +12,20 @@ from .models import *
 from .forms import PostForm, CommentForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+
+
+class CategorySearch(ListView):
+    model = Post
+    template_name = 'BulletinBoard/search_results.html'
+
+    def get_queryset(self):
+        search_query = self.request.GET.get('q')
+        object_list = Post.objects.filter(
+            Q(category__name__icontains=search_query)
+        )
+        return object_list
+    
 
 
 class IndexView(ListView):
