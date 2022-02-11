@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Search Results</h1>
+<h1>Результат поиск</h1>
  
 <ul>
   {% for city in object_list %}
@@ -11,12 +11,12 @@
     {% for posts in post_list %}
     <ul class="properties_list">
       <li>
-        <a href="post/{{ posts.id }}">
+        <a href="/post/{{ posts.id }}">
           <img src="{{ posts.image.url }}" alt="" title="" class="property_img"/>
         </a>
         <div class="property_details">
           <h1>
-            <a href="post/{{ posts.id }}">{{ posts.title }}</a>
+            <a href="/post/{{ posts.id }}">{{ posts.title }}</a>
           </h1>
           <h2>{{ posts.date_pub }}<span class="property_size">{{ posts.category }}</span></h2>
         </div>
